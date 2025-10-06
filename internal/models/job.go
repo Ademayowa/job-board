@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Ademayowa/job-board/internal/database/db"
+	db "github.com/Ademayowa/job-board/internal/database"
 
 	"github.com/google/uuid"
 )

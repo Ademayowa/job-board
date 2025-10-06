@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/Ademayowa/job-board/internal/database/db"
+	db "github.com/Ademayowa/job-board/internal/database"
 	"github.com/Ademayowa/job-board/internal/handlers"
 
 	"github.com/gin-gonic/gin"
