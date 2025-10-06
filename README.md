@@ -20,7 +20,7 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/Ademayowa/ci-golang.git
+git clone https://github.com/Ademayowa/job-board.git
 ```
 
 **Installation**
