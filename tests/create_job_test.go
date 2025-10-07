@@ -14,7 +14,7 @@ func TestCreateJob(t *testing.T) {
 	job := map[string]interface{}{
 		"title":       "Backend Developer",
 		"description": "Build scalable APIs",
-		"location":    "Lagos, Nigeria",
+		"location":    "United Kingdom",
 		"salary":      120000.0,
 		"duties":      []string{"Write code", "Review PRs"},
 		"url":         "https://example.com/job/1",
