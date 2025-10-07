@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// SetupTestApp sets up the test environment
 func SetupTestApp(t *testing.T) *httptest.Server {
 	gin.SetMode(gin.TestMode)
 
