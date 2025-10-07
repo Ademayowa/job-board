@@ -7,18 +7,18 @@ import (
 	"testing"
 )
 
-// TestGetSingleJob tests for fetching a single job
-func TestGetSingleJob(t *testing.T) {
+// TestDeleteJob tests for deleting a job
+func TestDeleteJob(t *testing.T) {
 	server := SetupTestApp(t)
 	defer Teardown(t, server)
 
 	// Create a job
 	job := map[string]interface{}{
 		"title":       "Backend Developer",
-		"description": "Build scalable APIs",
+		"description": "Build APIs",
 		"location":    "Lagos",
 		"salary":      120000.0,
-		"duties":      []string{"Write code", "Review PRs"},
+		"duties":      []string{"Write code"},
 		"url":         "http://example.com/job/1",
 	}
 
@@ -35,8 +35,10 @@ func TestGetSingleJob(t *testing.T) {
 	jobData := createResult["job"].(map[string]interface{})
 	jobID := jobData["id"].(string)
 
-	// Fetch the single job
-	resp, err := http.Get(server.URL + "/jobs/" + jobID)
+	// Delete the job
+	req, _ := http.NewRequest("DELETE", server.URL+"/jobs/"+jobID, nil)
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}
@@ -47,30 +49,34 @@ func TestGetSingleJob(t *testing.T) {
 		t.Errorf("Expected status 200, got %d", resp.StatusCode)
 	}
 
-	// Parse response
+	// Verify response message
 	var result map[string]interface{}
 	json.NewDecoder(resp.Body).Decode(&result)
 
-	// Verify job data
-	if result["id"] != jobID {
-		t.Errorf("Expected job ID %s, got %s", jobID, result["id"])
+	if result["message"] != "job deleted successfully" {
+		t.Errorf("Expected 'job deleted successfully', got '%v'", result["message"])
 	}
 
-	if result["title"] != job["title"] {
-		t.Errorf("Expected title '%s', got '%s'", job["title"], result["title"])
+	// Verify job is deleted (fetching should fail)
+	getResp, _ := http.Get(server.URL + "/jobs/" + jobID)
+	if err != nil {
+		t.Fatalf("Failed to fetch job: %v", err)
 	}
+	defer getResp.Body.Close()
 
-	if result["location"] != job["location"] {
-		t.Errorf("Expected location '%s', got '%s'", job["location"], result["location"])
+	if getResp.StatusCode != http.StatusInternalServerError {
+		t.Errorf("Expected status 500 for deleted job, got %d", getResp.StatusCode)
 	}
 }
 
-func TestGetSingleJob_NotFound(t *testing.T) {
+func TestDeleteJob_NotFound(t *testing.T) {
 	server := SetupTestApp(t)
 	defer Teardown(t, server)
 
-	// Try to fetch non-existent job
-	resp, err := http.Get(server.URL + "/jobs/invalid-id")
+	// Try to delete non-existent job
+	req, _ := http.NewRequest("DELETE", server.URL+"/jobs/invalid-id", nil)
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}
