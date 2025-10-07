@@ -1,4 +1,3 @@
-// tests/update_job_test.go
 package tests
 
 import (
