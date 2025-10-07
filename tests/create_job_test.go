@@ -7,6 +7,7 @@ import (
 	"testing"
 )
 
+// TestCreateJob tests for creating a job
 func TestCreateJob(t *testing.T) {
 	server := SetupTestApp(t)
 	defer Teardown(t, server)
