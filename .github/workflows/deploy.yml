@@ -1,4 +1,4 @@
-# This workflow is triggered on push or pull request to the main or staging branches.
+# This workflow is triggered on push or pull request to the main or staging branches
 name: Build, Test & Deploy
 
 on:
