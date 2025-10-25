@@ -38,3 +38,9 @@ go run main.go
 ```
 
 Open [http://localhost:8080/jobs](http://localhost:8080/jobs) in your browser to view all jobs.
+
+🧪 Running Tests
+
+```bash
+make test
+```
